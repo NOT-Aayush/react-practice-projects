@@ -1,4 +1,4 @@
-import { createContext, useState, useContext , useEffect } from "react";
+import { createContext, useState, useContext , useEffect , useRef } from "react";
 
 const MovieContext = createContext()
 
@@ -6,6 +6,7 @@ export const useMovieContext = () => useContext(MovieContext)
 
 export const MovieProvider = ({children}) => {
     const [favourites, setFavourites] = useState([])
+    const isFirstRender = useRef(true)
 
     useEffect(() => {
         try {
@@ -15,10 +16,14 @@ export const MovieProvider = ({children}) => {
             }
         } catch (err) {
             console.error("Failed to parse favourites:", err)
-            localStorage.removeItem("favourites") // clear bad data
+            localStorage.removeItem("favourites")
         }
     }, [])
     useEffect(() => {
+        if (isFirstRender.current) {
+            isFirstRender.current = false
+        return
+    }
         localStorage.setItem('favourites', JSON.stringify(favourites))
     },[favourites])
 
