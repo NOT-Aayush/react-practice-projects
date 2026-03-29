@@ -3,10 +3,10 @@ import {Routes, Route} from "react-router-dom"
 import Home from './pages/Home.jsx'
 import Favs from './pages/Favs.jsx'
 import NavBar from './components/NavBar.jsx'
-
+import { MovieProvider } from './contexts/MovieContex.jsx'
 function App() {
   return (
-    <div>
+    <MovieProvider>
     <NavBar />
     <main className="main-content">
       <Routes>
@@ -15,7 +15,7 @@ function App() {
       </Routes>
 
     </main>
-    </div>
+    </MovieProvider>
   )
 }
 export default App
